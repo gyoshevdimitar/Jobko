@@ -1,5 +1,7 @@
 package com.sumup.jobko.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "tasks")
 public class Task {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -18,6 +21,7 @@ public class Task {
     @Column(name = "command")
     private String command;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "tasks_requirements",
