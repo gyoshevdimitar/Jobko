@@ -13,7 +13,7 @@ public class TaskDto {
     @Size(min = 1, max = 66, message = "Command should be made of 1 to 66 symbols!")
     private String command;
 
-    private Set<Task> requirements;
+    private Set<String> requires;
 
     public String getName() {
         return name;
@@ -31,11 +31,11 @@ public class TaskDto {
         this.command = command;
     }
 
-    public Set<Task> getRequirements() {
-        return requirements;
+    public Set<String> getRequires() {
+        return requires;
     }
 
-    public void setRequirements(Set<Task> requirements) {
-        this.requirements = requirements;
+    public void setRequires(Set<String> requires) {
+        this.requires = requires;
     }
 }
