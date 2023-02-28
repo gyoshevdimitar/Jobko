@@ -8,7 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tasks")
-public class Task {
+public class Task implements Comparable<Task>{
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Task {
     @Column(name = "command")
     private String command;
 
-    //    @JsonIgnore
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tasks_requirements",
@@ -63,5 +63,10 @@ public class Task {
 
     public void setRequires(Set<Task> requirements) {
         this.requires = requirements;
+    }
+
+    @Override
+    public int compareTo(Task task) {
+        return (this.getRequires().stream().findFirst().get().name).compareTo(task.getRequires().stream().findFirst().get().name);
     }
 }
