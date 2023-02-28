@@ -19,29 +19,6 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public List<Task> getAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Task", Task.class).list();
-        }
-    }
-
-    @Override
-    public Task getById(int id) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(Task.class, id);
-        }
-    }
-
-    @Override
-    public Task getByName(String name) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Task> query = session.createQuery("from Task where name = :name", Task.class);
-            query.setParameter("name", name);
-            return query.list().get(0);
-        }
-    }
-
-    @Override
     public void create(Task task) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -67,6 +44,29 @@ public class TaskRepositoryImpl implements TaskRepository {
             session.beginTransaction();
             session.delete(task);
             session.getTransaction().commit();
+        }
+    }
+
+    @Override
+    public List<Task> getAll() {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from Task", Task.class).list();
+        }
+    }
+
+    @Override
+    public Task getById(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Task.class, id);
+        }
+    }
+
+    @Override
+    public Task getByName(String name) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Task> query = session.createQuery("from Task where name = :name", Task.class);
+            query.setParameter("name", name);
+            return query.list().get(0);
         }
     }
 }

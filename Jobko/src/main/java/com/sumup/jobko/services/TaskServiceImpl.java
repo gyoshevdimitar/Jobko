@@ -17,21 +17,6 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getAll() {
-        return taskRepository.getAll();
-    }
-
-    @Override
-    public Task getById(int id) {
-        return taskRepository.getById(id);
-    }
-
-    @Override
-    public Task getByName(String name) {
-        return taskRepository.getByName(name);
-    }
-
-    @Override
     public void create(Task task) {
         taskRepository.create(task);
     }
@@ -44,5 +29,20 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void delete(int id) {
         taskRepository.delete(id);
+    }
+
+    @Override
+    public List<Task> getAll() {
+        return taskRepository.getAll();
+    }
+
+    @Override
+    public Task getById(int id) {
+        return taskRepository.getById(id);
+    }
+
+    @Override
+    public Task getByName(String name) {
+        return taskRepository.getByName(name);
     }
 }
