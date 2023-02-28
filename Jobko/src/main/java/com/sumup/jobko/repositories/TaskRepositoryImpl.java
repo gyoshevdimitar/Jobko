@@ -19,6 +19,16 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
+    public List<Task> process() {
+        String query = "select distinct task from Task task " +
+                "join Task tq on tq.id = task.id " +
+                "order by tq.requires.size";
+        Session session = sessionFactory.openSession();
+        Query<Task> finalQuery = session.createQuery(query, Task.class);
+        return finalQuery.list();
+    }
+
+    @Override
     public void create(Task task) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -34,7 +44,6 @@ public class TaskRepositoryImpl implements TaskRepository {
             session.update(task);
             session.getTransaction().commit();
         }
-
     }
 
     @Override

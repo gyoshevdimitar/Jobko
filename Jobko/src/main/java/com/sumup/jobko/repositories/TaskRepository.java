@@ -5,6 +5,8 @@ import com.sumup.jobko.models.Task;
 import java.util.List;
 
 public interface TaskRepository {
+    List<Task> process();
+
     void create(Task task);
 
     void update(Task task);

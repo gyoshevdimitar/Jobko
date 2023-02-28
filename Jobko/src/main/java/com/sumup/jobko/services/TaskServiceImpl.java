@@ -17,6 +17,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> process() {
+        return taskRepository.process();
+    }
+
+    @Override
     public void create(Task task) {
         taskRepository.create(task);
     }
