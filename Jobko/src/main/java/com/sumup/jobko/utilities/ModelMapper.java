@@ -6,6 +6,9 @@ import com.sumup.jobko.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Component
 public class ModelMapper {
     private final TaskRepository taskRepository;
@@ -24,14 +27,14 @@ public class ModelMapper {
     public Task fromDto(TaskDto taskDto, int id) {
         Task task = taskRepository.getById(id);
         dtoToObject(taskDto, task);
+        if (taskDto.getRequires() != null) {
+            Set<Task> requires = new HashSet<>();
+            for (String require : taskDto.getRequires()) {
+                requires.add(taskRepository.getByName(require));
+            }
+            task.setRequires(requires);
+        }
         return task;
-    }
-
-    public TaskDto toTaskDto(Task task) {
-        TaskDto taskDto = new TaskDto();
-        taskDto.setName(task.getName());
-        taskDto.setCommand(task.getCommand());
-        return taskDto;
     }
 
     private void dtoToObject(TaskDto taskDto, Task task) {
