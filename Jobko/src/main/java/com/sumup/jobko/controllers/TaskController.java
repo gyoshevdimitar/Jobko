@@ -1,5 +1,6 @@
 package com.sumup.jobko.controllers;
 
+import com.sumup.jobko.models.InputDto;
 import com.sumup.jobko.models.Task;
 import com.sumup.jobko.models.TaskDto;
 import com.sumup.jobko.services.TaskService;
@@ -22,19 +23,15 @@ public class TaskController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping
-    public List<Task> getAll() {
-        return taskService.getAll();
-    }
-
-    @GetMapping("/{id}")
-    public Task getById(@PathVariable int id) {
-        return taskService.getById(id);
-    }
-
-    @GetMapping("/name")
-    public Task getByName(@RequestParam String name) {
-        return taskService.getByName(name);
+    @PostMapping("/job")
+    public List<Task> job(@RequestBody InputDto inputDto) {
+        for (TaskDto taskDto : inputDto.getTasks()) {
+            create(taskDto);
+        }
+        for (TaskDto taskDto : inputDto.getTasks()) {
+            update(taskService.getByName(taskDto.getName()).getId(), taskDto);
+        }
+        return getAll();
     }
 
     @PostMapping
@@ -55,5 +52,20 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id) {
         taskService.delete(id);
+    }
+
+    @GetMapping
+    public List<Task> getAll() {
+        return taskService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public Task getById(@PathVariable int id) {
+        return taskService.getById(id);
+    }
+
+    @GetMapping("/name")
+    public Task getByName(@RequestParam String name) {
+        return taskService.getByName(name);
     }
 }
