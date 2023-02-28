@@ -21,14 +21,14 @@ public class Task {
     @Column(name = "command")
     private String command;
 
-    @JsonIgnore
-    @ManyToMany
+    //    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "tasks_requirements",
             joinColumns = @JoinColumn(name = "task_id"),
             inverseJoinColumns = @JoinColumn(name = "requirement_id")
     )
-    private Set<Task> requirements = new HashSet<>();
+    private Set<Task> requires = new HashSet<>();
 
     public Task() {
     }
@@ -57,11 +57,11 @@ public class Task {
         this.command = command;
     }
 
-    public Set<Task> getRequirements() {
-        return requirements;
+    public Set<Task> getRequires() {
+        return requires;
     }
 
-    public void setRequirements(Set<Task> requirements) {
-        this.requirements = requirements;
+    public void setRequires(Set<Task> requirements) {
+        this.requires = requirements;
     }
 }
