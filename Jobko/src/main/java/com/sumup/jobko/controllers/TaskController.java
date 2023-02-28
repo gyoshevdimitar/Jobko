@@ -23,15 +23,15 @@ public class TaskController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping("/job")
-    public List<Task> job(@RequestBody InputDto inputDto) {
+    @PostMapping("/process")
+    public List<Task> process(@RequestBody InputDto inputDto) {
         for (TaskDto taskDto : inputDto.getTasks()) {
             create(taskDto);
         }
         for (TaskDto taskDto : inputDto.getTasks()) {
             update(taskService.getByName(taskDto.getName()).getId(), taskDto);
         }
-        return getAll();
+        return taskService.process();
     }
 
     @PostMapping
